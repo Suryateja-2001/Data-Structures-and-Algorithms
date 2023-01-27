@@ -1,7 +1,7 @@
 // checking if value is present or not using Binary Search. If value is present return index otherwise return -1.
 // ******** Binary Search is used only when a elements in Data Structure are sorted.  *********
 // Time Complexity = O(log n) 
-// Space Complexity = O(log n) -> as we are using recursive approach.
+// Space Complexity = O(log n) -> as we are using recursive approach. for iterative it will be O(1) space complexity.
 
 #include<iostream>
 #include<vector>
