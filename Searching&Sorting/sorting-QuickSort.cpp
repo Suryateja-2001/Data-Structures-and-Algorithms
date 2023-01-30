@@ -2,10 +2,6 @@
 // Time Complexity: O(N*N) -> worstcase, O(N*log N) -> average and bestcase
 // Space Complexity: O(1) 
 
-// *** Insertion Sort --> Inserting elements ***
-// Time Complexity : O(N*N)
-// Space Complexity: O(1)
-
 #include<iostream>
 using namespace std;
 
