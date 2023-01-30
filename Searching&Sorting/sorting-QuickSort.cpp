@@ -63,7 +63,7 @@ int main(){
     cout<<"Array before sorting:";
     dispalyArr(arr,size);
 
-    QuickSort(arr,size,(size-1));
+    QuickSort(arr,0,(size-1));
 
     cout<<"Array after sorting:";
     dispalyArr(arr,size);
