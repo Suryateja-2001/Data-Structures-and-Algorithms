@@ -53,6 +53,7 @@ void InsertNode_Pos(Node* *head,int val,int pos){
     int count =2;
     Node* temp = *head;
     while(count < pos){
+        if(temp->next == nullptr) break;
         temp = temp->next;
         count++;
     }
@@ -70,7 +71,7 @@ void DeleteElement(Node* *head){
     cout<<temp->data<<" is deleted"<<endl;
 }
 
-void display(struct Node* node){ 
+void display(Node* node){ 
    cout << "\n\n";
    // as linked list will end when Node is Null
   

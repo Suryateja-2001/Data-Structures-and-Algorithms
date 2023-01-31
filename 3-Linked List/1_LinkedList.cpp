@@ -59,6 +59,7 @@ void InsertNode_Pos(struct Node* *head,int val,int pos){
     int count =2;
     struct Node* temp = *head;
     while(count < pos){
+        if(temp->next == nullptr) break;
         temp = temp->next;
         count++;
     }
