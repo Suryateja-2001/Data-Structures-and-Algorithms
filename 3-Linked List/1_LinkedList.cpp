@@ -102,7 +102,7 @@ int main(){
         cin>>op;
         
         int Element,Position;
-        if(op != 4 || op != 5){
+        if(op != 4 && op != 5){
             cout<<"Enter the element:";
             cin>>Element;
         }
