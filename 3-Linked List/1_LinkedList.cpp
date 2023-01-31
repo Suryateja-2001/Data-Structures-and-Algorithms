@@ -1,4 +1,4 @@
-// Linked List using struct, malloc.
+// singly Linked List using struct, malloc.
 
 #include<iostream>
 using namespace std;

@@ -1,4 +1,4 @@
-// Linked list using class, new and external functions
+// singly Linked list using class, new and external functions
 #include<iostream>
 using namespace std;
 
