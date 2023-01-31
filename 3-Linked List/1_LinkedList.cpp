@@ -68,7 +68,7 @@ void InsertNode_Pos(struct Node* *head,int val,int pos){
 
 }
 
-void DeleteElement(struct Node* *head){
+void Delete(struct Node* *head){
     
     if(*head == nullptr){ 
         cout<<"List is Empty!"<<endl;
@@ -77,7 +77,32 @@ void DeleteElement(struct Node* *head){
     struct Node* temp = *head;
     *head = (*head)->next;
     cout<<temp->data<<" is deleted"<<endl;
+    delete(temp);
 
+}
+
+void DeleteElement(struct Node* *head,int val){
+    if(*head == nullptr){
+        cout<<"List is Empty!"<<endl;
+        return;
+    }
+    struct Node* temp = *head;
+    while(temp->next->next != nullptr && temp->next->data != val){
+        temp = temp->next;
+    }
+
+    struct Node* free_temp;  // used to delete the element from memory
+
+    if(temp->next->data == val){
+        free_temp = temp->next;
+        temp->next = temp->next->next;
+        delete(free_temp);
+        cout<<val<<" is deleted"<<endl;
+        return;
+    }
+
+    cout<<val<<" is not present in list"<<endl;
+    
 }
 
 void display(struct Node* node){ 
@@ -97,13 +122,13 @@ int main(){
     struct Node* head = nullptr;  // stores the  head address of linkedlist
 
     do{
-        cout<<"\n1 for Insert || 2  for Insert at End || 3 for Insert at Position || 4 for Delete the Element || 5 for Display"<<endl;
+        cout<<"\n1 for Insert || 2  for Insert at End || 3 for Insert at Position || 4 for Delete first Element || 5 for Delete the given value|| 6 for Display"<<endl;
         cout<<"Enter the number to perform Operation:";
         int op;
         cin>>op;
         
         int Element,Position;
-        if(op != 4 && op != 5){
+        if(op != 4 && op != 6){
             cout<<"Enter the element:";
             cin>>Element;
         }
@@ -125,9 +150,11 @@ int main(){
                 InsertNode_Pos(&head,Element,Position);
                 break;
             case 4:
-                DeleteElement(&head);
-                break;
+                Delete(&head);
             case 5:
+                DeleteElement(&head,Element);
+                break;
+            case 6:
                 display(head);
                 break;
             default:

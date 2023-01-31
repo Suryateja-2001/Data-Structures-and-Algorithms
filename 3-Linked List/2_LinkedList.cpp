@@ -61,7 +61,7 @@ void InsertNode_Pos(Node* *head,int val,int pos){
     temp->next = newNode;
 }
 
-void DeleteElement(Node* *head){
+void Delete(Node* *head){
     if(*head == nullptr){ 
         cout<<"List is Empty!"<<endl;
         return;
@@ -69,6 +69,31 @@ void DeleteElement(Node* *head){
     Node* temp = *head;
     *head = (*head)->next;
     cout<<temp->data<<" is deleted"<<endl;
+    delete(temp);
+}
+
+void DeleteElement(Node* *head,int val){
+    if(*head == nullptr){
+        cout<<"List is Empty!"<<endl;
+        return;
+    }
+    Node* temp = *head;
+    while(temp->next->next != nullptr && temp->next->data != val){
+        temp = temp->next;
+    }
+
+    Node* free_temp;  // used to delete the element from memory
+
+    if(temp->next->data == val){
+        free_temp = temp->next;
+        temp->next = temp->next->next;
+        delete(free_temp);
+        cout<<val<<" is deleted"<<endl;
+        return;
+    }
+
+    cout<<val<<" is not present in list"<<endl;
+    
 }
 
 void display(Node* node){ 
@@ -90,13 +115,13 @@ int main(){
     struct Node* head = nullptr;  // stores the  head address of linkedlist
 
     do{
-        cout<<"\n1 for Insert || 2  for Insert at End || 3 for Insert at Position || 4 for Delete the Element || 5 for Display"<<endl;
+        cout<<"\n1 for Insert || 2  for Insert at End || 3 for Insert at Position || 4 to Delete first Element || 5 To Delete the given Element || 6 for Display"<<endl;
         cout<<"Enter the number to perform Operation:";
         int op;
         cin>>op;
         
         int Element,Position;
-        if(op != 4 && op != 5){
+        if(op != 4 && op != 6){
             cout<<"Enter the element:";
             cin>>Element;
         }
@@ -118,9 +143,11 @@ int main(){
                 InsertNode_Pos(&head,Element,Position);
                 break;
             case 4:
-                DeleteElement(&head);
-                break;
+                Delete(&head);
             case 5:
+                DeleteElement(&head,Element);
+                break;
+            case 6:
                 display(head);
                 break;
             default:

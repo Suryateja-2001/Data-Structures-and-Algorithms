@@ -34,8 +34,9 @@ class LinkedList{
     void InsertNode(int val);
     void InsertNode_End(int val);
     void InsertNode_Pos(int val,int pos);
-    void DeleteElement();
+    void DeleteElement(int val);
     void display(); 
+    void Delete();
 
 };
 
@@ -92,14 +93,40 @@ void LinkedList::InsertNode_Pos(int val,int pos){
     temp->next = newNode;
 }
 
-void LinkedList::DeleteElement(){
+void LinkedList::Delete(){
     if(head == nullptr){ 
         cout<<"List is Empty!"<<endl;
         return;
     }
     Node* temp = head;
-    head = (head)->next;
+    head = head->next;
     cout<<temp->data<<" is deleted"<<endl;
+    //free(free_temp);
+    delete(temp);
+}
+
+void LinkedList::DeleteElement(int val){
+    if(head == nullptr){
+        cout<<"List is Empty!"<<endl;
+        return;
+    }
+    Node* temp = head;
+    while(temp->next->next != nullptr && temp->next->data != val){
+        temp = temp->next;
+    }
+
+    Node* free_temp;  // used to delete the element from memory
+
+    if(temp->next->data == val){
+        free_temp = temp->next;
+        temp->next = temp->next->next;
+        delete(free_temp);
+        cout<<val<<" is deleted"<<endl;
+        return;
+    }
+
+    cout<<val<<" is not present in list"<<endl;
+    
 }
 
 void LinkedList::display(){ 
@@ -119,13 +146,13 @@ int main(){
     LinkedList list;
 
     do{
-        cout<<"\n1 for Insert || 2  for Insert at End || 3 for Insert at Position || 4 for Delete the Element || 5 for Display"<<endl;
+        cout<<"\n1 for Insert || 2  for Insert at End || 3 for Insert at Position || 4 To Delete first element || 5 for Delete the Element || 6 for Display"<<endl;
         cout<<"Enter the number to perform Operation:";
         int op;
         cin>>op;
         
         int Element,Position;
-        if(op != 4 && op != 5){
+        if(op != 4 && op != 6){
             cout<<"Enter the element:";
             cin>>Element;
         }
@@ -147,9 +174,12 @@ int main(){
                 list.InsertNode_Pos(Element,Position);
                 break;
             case 4:
-                list.DeleteElement();
+                list.Delete();
                 break;
             case 5:
+                list.DeleteElement(Element);
+                break;
+            case 6:
                 list.display();
                 break;
             default:
