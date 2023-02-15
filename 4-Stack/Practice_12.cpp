@@ -1,4 +1,4 @@
-// largest rectangular area under a histogram (Naive Approach)
+// largest rectangular area under a histogram (optimised Approach)
 // Time Complexity O(N)       ------>>>>> (N+N+N)
 // Space Complexity O(N)
 
