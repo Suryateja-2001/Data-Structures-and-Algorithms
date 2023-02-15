@@ -7,45 +7,60 @@
 #include<stack>
 using namespace std;
 
+/*
+arr[] = {12, 2, 5, 4, 1, 7, 8}
+stores the index of prev smaller of the respective index or if no value exist we store -1 as shown below.
+prevcount[size] = {-1, -1, 1, 1,-1, 4, 5}
+*/
 void psmallEle(int *arr,int *count,int size){
     stack<int>prevSmall;
-    prevSmall.push(arr[0]);
 
-    for(int i=1;i<size;i++){
+    for(int i=0;i<size;i++){
 
-        while(!prevSmall.empty() && prevSmall.top()>= arr[i]){
+        while(!prevSmall.empty() && arr[prevSmall.top()] >= arr[i]){
             prevSmall.pop();
-            // counts no.of elements greater equal to arr[i] before arr[i]
-            count[i] += 1;
         }
-        prevSmall.push(arr[i]);
+
+        if(prevSmall.empty()){
+            count[i] = -1;
+        }else{
+            count[i] = prevSmall.top();
+        }
+        prevSmall.push(i);
     }
 }
 
 void nsmallEle(int *arr, int *count,int size){
     stack<int>nxtSmall;
-    nxtSmall.push(arr[size-1]);
 
-    for(int i=size-2;i>=0;i--){
+    for(int i=size-1;i>=0;i--){
 
-        while(!nxtSmall.empty() && nxtSmall.top()>= arr[i]){
+        while(!nxtSmall.empty() && arr[nxtSmall.top()] >= arr[i]){
             nxtSmall.pop();
-            // counts no.of elements greater equal to arr[i] after arr[i]
-            count[i] += 1;
         }
-        nxtSmall.push(arr[i]);
+        if(nxtSmall.empty()){
+            count[i] = size;
+        }else{
+            count[i] = nxtSmall.top();
+        }
+        nxtSmall.push(i);
     }
 }
 
 int maxArea(int *arr,int size){
     int ans=arr[0];
-    int count[size]={1};
+    int prevcount[size],nextcount[size];
 
-    psmallEle(arr, count, size);
-    nsmallEle(arr, count, size);
+    psmallEle(arr, prevcount, size);
+    nsmallEle(arr, nextcount, size);
 
     for(int i=0;i<size;i++){
-        ans = max(ans,(arr[i] * count[i]));
+        int temp = arr[i];
+
+        temp += (i- prevcount[i]-1)*arr[i];
+        temp += (nextcount[i]-i-1)*arr[i]; 
+
+        ans = max(ans,temp);
     }
 
     return ans;
