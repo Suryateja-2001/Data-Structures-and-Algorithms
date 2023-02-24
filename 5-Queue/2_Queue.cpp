@@ -1,6 +1,8 @@
 // Queue using struct & malloc
 
 #include<iostream>
+#include<cstdlib>
+#include<limits>
 using namespace std;
 
 // creating queue structure
