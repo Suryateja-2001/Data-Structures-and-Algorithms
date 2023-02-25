@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include<cstdlib>
+#include<queue>
 using namespace std;
 
 struct Node{
@@ -47,6 +48,27 @@ void preOrder(struct Node* node){
         preOrder(node->left);
         preOrder(node->right);
     }
+}
+
+// level order traversal.
+void levelOrder(struct Node* node){
+    if (node == nullptr) return;
+
+    queue<Node*>qt;
+    qt.push(node);
+
+    while(!qt.empty()){
+        Node* queue = qt.front();
+        qt.pop();
+        cout<<queue->data<<" ";
+
+        if(queue->left != nullptr)
+            qt.push(queue->left);
+        
+        if(queue->right)
+            qt.push(queue->right);
+    }
+    
 }
 
 // max-depth or max-height of a tree.
@@ -110,8 +132,11 @@ int main(){
 
     cout<<"\n"<<maxHeight(root)<<endl;
 
-    cout<<"\n elements at distance 2 are ";
+    cout<<"\nelements at distance 2 are ";
     node_KDistance(root,2);
+
+    cout<<"\nLevel Order traversal: ";
+    levelOrder(root);
 
     return 0;
 }
