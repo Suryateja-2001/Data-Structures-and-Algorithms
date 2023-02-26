@@ -127,6 +127,21 @@ int maxElement(struct Node* root){
 }
 
 
+// Left View of Tree
+int maxVisited_level = 0;
+void leftViewTree(struct Node* root, int currLevel = 1){
+    if(root == nullptr) return;
+
+    if(maxVisited_level < currLevel){
+        cout<<root->data<<" ";
+        maxVisited_level = currLevel;
+    }
+
+    leftViewTree(root->left,currLevel+1);
+    leftViewTree(root->right,currLevel+1);
+}
+
+
 int main(){
     struct Node* root = new Node(15);
 
@@ -160,6 +175,9 @@ int main(){
     cout<<"\nSize of Tree: "<<BTSize(root)<<endl;
 
     cout<<"Max Element in array:"<<maxElement(root)<<endl;
+
+    cout<<"Left View of the Binary Tree is ";
+    leftViewTree(root);
 
     return 0;
 }
