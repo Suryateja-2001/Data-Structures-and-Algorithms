@@ -1,4 +1,4 @@
-// basic tree Using struct,struct-constructor and new
+// basic Binary tree Using struct,struct-constructor and new
 
 #include<iostream>
 #include<cstdlib>
@@ -106,6 +106,16 @@ void node_KDistance(struct Node* node, int distance){
 
 }
 
+// size of Binary Tree.
+int BTSize(struct Node* root){
+
+    if(root == nullptr) return 0;
+
+    int size = BTSize(root->left) + BTSize(root->right) + 1;
+
+    return size;
+}
+
 
 
 int main(){
@@ -137,6 +147,8 @@ int main(){
 
     cout<<"\nLevel Order traversal: ";
     levelOrder(root);
+
+    cout<<"\nSize of Tree: "<<BTSize(root)<<endl;
 
     return 0;
 }
