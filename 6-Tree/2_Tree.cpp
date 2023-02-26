@@ -128,6 +128,9 @@ int maxElement(struct Node* root){
 
 
 // Left View of Tree
+/* 
+Method -1
+
 int maxVisited_level = 0;
 void leftViewTree(struct Node* root, int currLevel = 1){
     if(root == nullptr) return;
@@ -139,6 +142,34 @@ void leftViewTree(struct Node* root, int currLevel = 1){
 
     leftViewTree(root->left,currLevel+1);
     leftViewTree(root->right,currLevel+1);
+}
+*/
+
+/* Method-2 */
+void leftViewTree(struct Node* root){
+    if(root == nullptr) return;
+
+    queue<struct Node*>qt;
+    qt.push(root);
+
+    while(!qt.empty()){
+        int n = qt.size();
+
+        for(int i=0;i<n;i++){
+            struct Node* node = qt.front();
+            qt.pop();
+
+            if(i == 0)
+                cout<<node->data<<" ";
+            
+            if(node->left != nullptr)
+                qt.push(node->left);
+            
+            if(node->right != nullptr)
+                qt.push(node->right);
+        }
+    }
+
 }
 
 
