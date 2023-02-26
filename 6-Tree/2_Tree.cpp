@@ -3,6 +3,7 @@
 #include<iostream>
 #include<cstdlib>
 #include<queue>
+#include<limits>
 using namespace std;
 
 struct Node{
@@ -116,6 +117,14 @@ int BTSize(struct Node* root){
     return size;
 }
 
+// max Element in a Binary Tree
+int maxElement(struct Node* root){
+    if(root == nullptr) return INT32_MIN;
+    int max_val = max((root->data), maxElement(root->left));
+    max_val = max(max_val, maxElement(root->right));
+
+    return max_val;
+}
 
 
 int main(){
@@ -149,6 +158,8 @@ int main(){
     levelOrder(root);
 
     cout<<"\nSize of Tree: "<<BTSize(root)<<endl;
+
+    cout<<"Max Element in array:"<<maxElement(root)<<endl;
 
     return 0;
 }
