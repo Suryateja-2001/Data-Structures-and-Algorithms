@@ -94,6 +94,28 @@ void sprialOrder(struct Node* root){
     }
 }
 
+// Max Diameter of Binary tree Naive Approach
+int maxheight(struct Node* root){
+    if(root == nullptr) return 0;
+
+    return 1 + max(maxheight(root->left),maxheight(root->right));
+}
+
+int diameterBtree(struct Node* root){
+    if(root == nullptr) return 0;
+
+    int curr_dia,l_dia,r_dia;
+
+    curr_dia = maxheight(root->left)+ maxheight(root->right);
+    l_dia = diameterBtree(root->left);
+    r_dia = diameterBtree(root->right);
+
+
+    return(max(curr_dia,max(l_dia,r_dia)));
+}
+
+
+
 int main(){
     struct Node* root = new Node(15);
 
@@ -105,10 +127,12 @@ int main(){
 
     root->right->left = new Node(19);
     root->right->right = new Node(25);
-    root->right->right->left = new Node(24);
+    root->right->right->right = new Node(24);
 
     cout<<"\nSpiral Order of Binary Tree is ";
     sprialOrder(root);
+
+    cout<<"\nMax diameter is "<<diameterBtree(root);
 
     return 0;
 }
