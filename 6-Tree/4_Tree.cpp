@@ -15,6 +15,8 @@ class Queue{
     }
 };
 
+// LCA Naive Approach
+
 bool findPath(vector<int> &path, int fVal, Queue* root){
     if(root == nullptr) return false;
 
@@ -34,6 +36,30 @@ int LeastCommon_Ancestor(vector<int> &pathOne, vector<int> &pathTwo, Queue* root
     }
 
     return pathOne[--i];
+}
+
+// LCA Optimised Approach
+Queue* LeastCommon_Ancestor_OA(Queue* root,int val1,int val2){
+    // base case
+    if(root == nullptr) return root;
+
+    // if any of the value is present at root return root as it will be the LCA.
+    if(root->data == val1 || root->data == val2) return root;
+ 
+    Queue* lLCA = LeastCommon_Ancestor_OA(root->left, val1, val2);
+    Queue* rLCA = LeastCommon_Ancestor_OA(root->right, val1, val2); 
+
+    // if the values are present on either side of  returns root
+    if(lLCA != nullptr && rLCA != nullptr) return root;
+
+    // if only one value is found 
+    return (lLCA != nullptr)?lLCA:rLCA;
+}
+
+int LCA(Queue* root,int val1,int val2){
+    Queue* node = LeastCommon_Ancestor_OA(root,val1,val2);
+
+    return node->data;
 }
 
 int main(){
@@ -57,6 +83,6 @@ int main(){
         cout<<"Element entered are not available in the tree..!"<<endl;
     }
 
-
+    cout<<"Least Common Ancestor is "<<LCA(root,25,19)<<endl;
     return 0;
 }
