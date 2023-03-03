@@ -28,6 +28,7 @@ class BSTree{
     void inOrder();
     bool search(int val);
     void deleteNode(int val);
+    void floor(int val);
 };
 
 int main(){
@@ -44,13 +45,14 @@ int main(){
 
     obj.inOrder();
 
-    bool flag = obj.search(23);
+    bool flag = obj.search(17);
     if(flag){
         cout<<"\nData found...!"<<endl;
     }else{
         cout<<"\nData is not found"<<endl;
     }
 
+    obj.floor(5);
     obj.deleteNode(23);
     obj.inOrder();
     return 0;
@@ -190,4 +192,35 @@ Node* BSTree::hdeleteNode(Node* node,int val){
 void BSTree::deleteNode(int val){
     Node* node = root;
     hdeleteNode(node,val);
+}
+
+// finding value or floor of the given value.
+int max_floor = 0;
+
+void BSTree::floor(int val){
+    Node* node = root;
+
+    if(node == nullptr) {
+       cout<<"Tree is not present."<<endl;
+        return;
+    }
+
+    while(node != nullptr){
+        if(node->data == val){
+            max_floor = val;
+            break;
+        }
+
+        if(node->data < val){
+            max_floor = max(max_floor,node->data);
+        }
+
+        if(node->data > val){
+            node = node->left;
+        }else{
+            node = node->right;
+        }  
+    }
+
+    cout<<max_floor<<" is the floor of the given value in the tree."<<endl;
 }
