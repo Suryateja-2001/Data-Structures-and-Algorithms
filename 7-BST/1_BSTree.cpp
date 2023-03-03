@@ -29,6 +29,7 @@ class BSTree{
     bool search(int val);
     void deleteNode(int val);
     void floor(int val);
+    void ceil(int val);
 };
 
 int main(){
@@ -53,6 +54,7 @@ int main(){
     }
 
     obj.floor(5);
+    obj.ceil(17);
     obj.deleteNode(23);
     obj.inOrder();
     return 0;
@@ -223,4 +225,34 @@ void BSTree::floor(int val){
     }
 
     cout<<max_floor<<" is the floor of the given value in the tree."<<endl;
+}
+
+// finding value or ceil of the given value.
+int max_ceil = INT32_MAX;
+void BSTree::ceil(int val){
+    Node* node = root;
+
+    if(node == nullptr) {
+       cout<<"Tree is not present."<<endl;
+        return;
+    }
+
+    while(node != nullptr){
+        if(node->data == val){
+            max_ceil = val;
+            break;
+        }
+
+        if(node->data > val){
+            max_ceil = min(max_ceil,node->data);
+        }
+
+        if(node->data > val){
+            node = node->left;
+        }else{
+            node = node->right;
+        }  
+    }
+
+    cout<<max_ceil<<" is the ceil of the given value in the tree."<<endl;
 }
