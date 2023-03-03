@@ -18,9 +18,11 @@ class BSTree{
     Node* root = nullptr;
     void Orderin(Node* node);
     bool hsearch(Node* node,int val);
+    Node* RHinsert(int val,Node* node);
 
     public:
     void insert(int val);
+    void Rinsert(int val);
     void inOrder();
     bool search(int val);
 };
@@ -35,6 +37,7 @@ int main(){
     obj.insert(29);
     obj.insert(25);
     obj.insert(5);
+    obj.Rinsert(17);
 
     obj.inOrder();
 
@@ -47,7 +50,36 @@ int main(){
 
     return 0;
 }
+// recursion insertion
+Node* BSTree::RHinsert(int val,Node* node){
+    if(node == nullptr){
+        Node* new_node = new Node(val);
+        node = new_node;
+        cout<<node->data<<" is Inserted."<<endl;
+        return node;
+    }
 
+    if(node->data > val){
+        node->left = RHinsert(val,node->left);
+    }else{
+        node->right = RHinsert(val,node->right);
+    }
+    return node;
+}
+void BSTree::Rinsert(int val ){
+    if(root == nullptr){
+        Node* new_node = new Node(val);
+        root = new_node;
+        return;
+    }
+    if(root->data > val){
+        root->left = RHinsert(val,root->left);
+    }else{
+        root->right = RHinsert(val,root->right);
+    }
+}
+
+// iterative insertion
 void BSTree::insert(int val){
     Node* new_node = new Node(val);
 
