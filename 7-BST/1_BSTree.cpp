@@ -19,12 +19,15 @@ class BSTree{
     void Orderin(Node* node);
     bool hsearch(Node* node,int val);
     Node* RHinsert(int val,Node* node);
+    Node* hdeleteNode(Node* node,int val);
+    Node* inorderSuccessor(Node* node);
 
     public:
     void insert(int val);
     void Rinsert(int val);
     void inOrder();
     bool search(int val);
+    void deleteNode(int val);
 };
 
 int main(){
@@ -33,21 +36,23 @@ int main(){
     obj.insert(20);
     obj.insert(23);
     obj.insert(9);
-    obj.insert(15);
     obj.insert(29);
     obj.insert(25);
     obj.insert(5);
     obj.Rinsert(17);
+    obj.insert(15);
 
     obj.inOrder();
 
-    bool flag = obj.search(25);
+    bool flag = obj.search(23);
     if(flag){
         cout<<"\nData found...!"<<endl;
     }else{
         cout<<"\nData is not found"<<endl;
     }
 
+    obj.deleteNode(23);
+    obj.inOrder();
     return 0;
 }
 // recursion insertion
@@ -85,6 +90,7 @@ void BSTree::insert(int val){
 
     if(root == nullptr){
         root = new_node;
+        cout<<root->data<<" is inserted."<<endl;
         return;
     }
 
@@ -98,12 +104,12 @@ void BSTree::insert(int val){
             temp = temp->right;
         }
     }
-    if(prevNode->left == nullptr){
+    if(prevNode->data > val){
         prevNode->left = new_node;
         cout<<prevNode->left->data<<" is inserted."<<endl;
     }else{
         prevNode->right = new_node;
-        cout<<prevNode->left->data<<" is inserted."<<endl;
+        cout<<prevNode->right->data<<" is inserted."<<endl;
     }
 }
 
@@ -131,8 +137,57 @@ bool BSTree::hsearch(Node* node,int val){
 
 bool BSTree::search(int val){
     if(root == nullptr) return false;
+    return hsearch(root,val);
+}
 
-    if(root->data == val) return true;
+// delete a node.
+Node* BSTree::inorderSuccessor(Node* node){
+    if(node == nullptr) return node;
 
-    return (val < root->data)?hsearch(root->left,val):hsearch(root->right,val);
+    while(node != nullptr && node->left != nullptr){
+        node = node->left;
+    }
+
+    return node;
+}
+
+Node* BSTree::hdeleteNode(Node* node,int val){
+    if(node == nullptr) return node;
+
+    //finding the node to delete
+    if(node->data > val){
+        node->left = hdeleteNode(node->left,val);
+        return node;
+    }else if(node->data < val){
+        node->right = hdeleteNode(node->right,val);
+        return node;
+    }else{
+        // if right is null
+        if(node->right == nullptr){
+
+            Node* temp = node->left;
+            free(node);
+            return temp;
+            // if left is null
+        }else if(node->left == nullptr){   
+
+            Node* temp = node->right;
+            free(node);
+            return temp;
+
+        }else{   
+
+            // if both are not null
+            Node* successorNode = inorderSuccessor(node->right);
+            node->data = successorNode->data;
+            node->right = hdeleteNode(node->right,node->data); 
+        }
+    }
+    return node;
+}
+
+
+void BSTree::deleteNode(int val){
+    Node* node = root;
+    hdeleteNode(node,val);
 }
