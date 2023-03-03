@@ -17,10 +17,12 @@ class BSTree{
     private:
     Node* root = nullptr;
     void Orderin(Node* node);
+    bool hsearch(Node* node,int val);
 
     public:
     void insert(int val);
     void inOrder();
+    bool search(int val);
 };
 
 int main(){
@@ -35,6 +37,13 @@ int main(){
     obj.insert(5);
 
     obj.inOrder();
+
+    bool flag = obj.search(25);
+    if(flag){
+        cout<<"\nData found...!"<<endl;
+    }else{
+        cout<<"\nData is not found"<<endl;
+    }
 
     return 0;
 }
@@ -76,4 +85,22 @@ void BSTree::Orderin(Node* node){
 
 void BSTree::inOrder(){
     Orderin(root);
+}
+
+// search function
+
+bool BSTree::hsearch(Node* node,int val){
+    if(node == nullptr) return false;
+
+    if(node->data == val) return true;
+
+    return (val < node->data)?hsearch(node->left,val):hsearch(node->right,val);
+}
+
+bool BSTree::search(int val){
+    if(root == nullptr) return false;
+
+    if(root->data == val) return true;
+
+    return (val < root->data)?hsearch(root->left,val):hsearch(root->right,val);
 }
