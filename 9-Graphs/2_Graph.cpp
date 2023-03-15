@@ -2,6 +2,7 @@
 #include<iostream>
 #include<queue>
 #include<vector>
+#include<stack>
 using namespace std;
 
 class Graph{
@@ -9,11 +10,13 @@ class Graph{
     int V,E;
     int **adjArr;
     vector<int>visitedArray;
+    void printPaths(int start, int last, vector<bool> &pathVisited, vector<vector<int>> &Allpaths, vector<int> &path);
     public:
     Graph(int V,int E);
     void newEdge(int first,int last);
     void graphBsf(int start);
     bool pathExist(int start,int end);
+    void allPaths(int start, int last);
 };
 
 Graph::Graph(int V,int E){
@@ -93,6 +96,58 @@ bool Graph::pathExist(int start,int last){
     return false;
 }
 
+void Graph::printPaths(int start,int last,vector<bool> &pathVisited, vector<vector<int>> &Allpaths,vector<int> &path){
+
+    if(start == last){
+        Allpaths.push_back(path);
+        return;
+    }
+
+    for(int i=start;i<V;i++){
+        if(!pathVisited[i] && adjArr[start][i] == 1){
+            pathVisited[i] = true;
+            path.push_back(i);
+
+            printPaths(i,last,pathVisited,Allpaths,path);
+
+            pathVisited[i] = false; 
+            path.pop_back();     
+        }
+    }
+    
+}
+
+void Graph::allPaths(int start,int last){
+
+    
+    vector<bool>pathVisited(V,false);
+    vector<int>path;
+    vector<vector<int>>Allpaths;
+
+    path.push_back(start);
+    pathVisited[start] = true;
+
+    for(int i=0;i<V;i++){
+        
+        if(!pathVisited[i] && adjArr[start][i] == 1){
+
+            pathVisited[i] = true;
+            path.push_back(i);
+            
+            printPaths(i,last,pathVisited,Allpaths,path);
+            path.pop_back();
+            pathVisited[i] = false;
+        }
+    }
+    
+    for(auto arr:Allpaths){
+        for(auto ele : arr){
+            cout<<ele<<" ";
+        }
+        cout<<endl;
+    }
+    
+}
 
 int main(){
     int V = 8, E = 9;
@@ -113,10 +168,12 @@ int main(){
    obj->graphBsf(0);
 
    if(obj->pathExist(6,7)){
-    cout<<"There is a path ";
+    cout<<"There is a path "<<endl;
    }else{
-    cout<<"No path";
+    cout<<"No path"<<endl;
    }
+
+    obj->allPaths(0,5);
 
     return 0;
 }
