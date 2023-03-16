@@ -64,6 +64,8 @@ void Graph::shortestPath(int start, int end){
             if(!visitedNode[i] && adjARR[val][i] == 1){
                 visitedNode[i] = true;
                 pathsearch.push(i);
+
+                // mapping the 'i' value to 'val' as the i is visited because of 'val'.
                 mp.insert({i,val});
 
                 if(i == end){
